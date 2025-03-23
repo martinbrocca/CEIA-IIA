@@ -91,7 +91,7 @@ entiendan que es cada parte.
         - Estado inicial: ([5,4,3,2,1],[],[])
         - Estado intermedio: ([5,4],[3,2],[1])
         - Estado final: ([],[],[5,4,3,2,1]) -> todos los discos en la última varilla
-    2. Espacio entre estados: es el conjunto de las combinaciones posibles de los discos en las varillas. Como cada uno de los 5 discos puede estar en cualquiera de las 3 varillas, el número total de estados posibles es 3^5 = 243
+    2. Espacio de estados: es el conjunto de las combinaciones posibles de los discos en las varillas. Como cada uno de los 5 discos puede estar en cualquiera de las 3 varillas, el número total de estados posibles es 3^5 = 243
     3. Árbol de búsqueda: es la exploración de todas las posibles soluciones desde el estado inicial hasta el objetivo:
         - Cada nodo en el árbol es un estado del problema
         - Las ramas son las acciones posibles (mover un disco de una varilla a otra)
@@ -107,7 +107,7 @@ entiendan que es cada parte.
         - En algoritmos heurísticos, la frontera almacena los estados ordenados por una función de costo
 
 
-4. Para detalles de la implementación de búsqueda en profundidad (DFS), referirse a la [notebook TP1](./tp1.ipynb).
+4. Para detalles de la implementación de búsqueda en profundidad (DFS), Greedy y A<sup>*</sup>, referirse a la [notebook TP1](./tp1.ipynb).
 
 5. ¿Qué complejidad en tiempo y memoria tiene el algoritmo elegido? 
    Para analizar la complejidad en la implementación de búsqueda en profundidad se deben de considerar el comportamiento en función del número de discos *(n)*
@@ -138,7 +138,7 @@ entiendan que es cada parte.
 7. Si la solución óptima es $2^k - 1$ movimientos con *k* igual al número de discos. Qué tan lejos está la solución 
 del algoritmo implementado de esta solución óptima
      La tabla a continuación muestra la longitud de caminos encontrados por los algoritmos:
-     | Algoritmo | Nodos explorados | Estados visitados | Nodos en frontera | Profundidad maxima | Costo toal|
+     | Algoritmo | Nodos explorados | Estados visitados | Nodos en frontera | Profundidad maxima | Costo total|
      |-----------|------------------|-------------------|-------------------|--------------------|-----------|
      |Busq. en anchura | 1351 | 233| 285 | 31 | 31 |
      |Busq. en prof.   | 122 | 122 | 63 | 121 | 121 |
@@ -151,3 +151,14 @@ del algoritmo implementado de esta solución óptima
 
 
 ## Conclusiones finales:
+
+Este trabajo permitió aplicar de manera práctica los conceptos de agentes, entornos y algoritmos de búsqueda dentro del clásico problema de la Torre de Hanoi. A partir del modelo PEAS se logró identificar a los elementos clave del sistema, como el entorno estructurado, las reglas del juego y las acciones posibles. Esto permite desarrollar el problema en un en un entorno completamente observable, determinístico, discreto y de un solo agente, lo cual lo vuelve ideal para aplicar técnicas de búsqueda.
+
+
+Además, al implementar distintos algoritmos de búsqueda (BFS, DFS y DFS_Smart, Greedy y A*) se observa en la práctica cómo varían en tiempo, memoria y eficiencia. Resulta interesante observar que, aunque DFS consume menos memoria, puede alejarse bastante de la solución óptima, mientras que BFS garantiza la solución más corta, pero a mayor costo computacional. DFS_Smart logró un equilibrio, reduciendo movimientos innecesarios. Se observó también que los algoritmos de búsqueda informada Greedy y A*, que incorporan el uso de la función heurística, alcanzan ambos la solución óptima de 31 movimientos al igual que BFS, pero reduciendo considerablemente la cantidad de nodos explorados.
+
+
+Otro resultado alcanzado fue el de modelar formalmente un problema desde el punto de vista de IA: identificamos qué es un estado, una acción, un nodo, el objetivo y la frontera de búsqueda. Esto nos dio una visión más clara de cómo los algoritmos "piensan" o buscan la mejor manera de resolver un problema.
+
+
+En resumen, este TP fue útil no solo para aplicar lo visto en clase, sino también para empezar a desarrollar una forma de pensar en términos de agentes inteligentes y planificación.
