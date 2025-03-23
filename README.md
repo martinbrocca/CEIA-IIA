@@ -87,22 +87,21 @@ entiendan que es cada parte.
 
 3. En el contexto de este problema, establezca cuáles son los: estado, espacio de estados, árbol de búsqueda, nodo de búsqueda, objetivo, acción y frontera.
 
-    1. **Estado:** el estado es una configuración específica de los discos en las tres varillas en un m
-    2. omento dado. Se puede hacer un ejemplo con una lista de tres pilas, donde cada pila (varilla) contiene los discos que tiene en orden:
+    1. **Estado:** el estado es una configuración específica de los discos en las tres varillas en un momento dado. Se puede hacer un ejemplo con una lista de tres pilas, donde cada pila (varilla) contiene los discos que tiene en orden:
         - Estado inicial: ([5,4,3,2,1],[],[])
         - Estado intermedio: ([5,4],[3,2],[1])
         - Estado final: ([],[],[5,4,3,2,1]) -> todos los discos en la última varilla
-    3. Espacio entre estados: es el conjunto de las combinaciones posibles de los discos en las varillas. Como cada uno de los 5 discos puede estar en cualquiera de las 3 varillas, el número total de estados posibles es 3^5 = 243
-    4. Árbol de búsqueda: es la exploración de todas las posibles soluciones desde el estado inicial hasta el objetivo:
+    2. Espacio entre estados: es el conjunto de las combinaciones posibles de los discos en las varillas. Como cada uno de los 5 discos puede estar en cualquiera de las 3 varillas, el número total de estados posibles es 3^5 = 243
+    3. Árbol de búsqueda: es la exploración de todas las posibles soluciones desde el estado inicial hasta el objetivo:
         - Cada nodo en el árbol es un estado del problema
         - Las ramas son las acciones posibles (mover un disco de una varilla a otra)
         - El estado inicial es la raíz del árbol
         - El estado objetivo es un nodo hoja
         - El árbol crece exponencialmente porque en cada nivel se generan nuevos estados dependiendo de los movimientos posibles.
-    5. Nodo de búsqueda: es un elemento del árbol de búsqueda que contiene un estado específico, un puntero al nodo padre (estado anterior), la acción que llevó a ese estado, y el costo acumulado (movimientos realizados hasta ese momento). Cada nodo es un paso en la secuencia de solución.
-    6. Objetivo: alcanzar un estado en el que todos los discos estén en la tercera varilla, en el mismo orden en el que estaban originalmente en la primera -> ([],[],[5,4,3,2,1])
-    7. Acción: es la operación de mover un disco de una varilla a otra, cumpliendo las reglas del juego: solo se mueve un disco superior de una pila y no se puede colocar un disco grande sobre uno más pequeño.
-    8. Frontera: es el conjunto de nodos que están en proceso de ser explorados en la búsqueda. Por ejemplo:
+    4. Nodo de búsqueda: es un elemento del árbol de búsqueda que contiene un estado específico, un puntero al nodo padre (estado anterior), la acción que llevó a ese estado, y el costo acumulado (movimientos realizados hasta ese momento). Cada nodo es un paso en la secuencia de solución.
+    5. Objetivo: alcanzar un estado en el que todos los discos estén en la tercera varilla, en el mismo orden en el que estaban originalmente en la primera -> ([],[],[5,4,3,2,1])
+    6. Acción: es la operación de mover un disco de una varilla a otra, cumpliendo las reglas del juego: solo se mueve un disco superior de una pila y no se puede colocar un disco grande sobre uno más pequeño.
+    7. Frontera: es el conjunto de nodos que están en proceso de ser explorados en la búsqueda. Por ejemplo:
         - En búsqueda en anchura, la frontera es la fila de estados pendientes de ser visitados
         - En búsqueda en profundidad, la frontera es la pila de estados que se están explorando
         - En algoritmos heurísticos, la frontera almacena los estados ordenados por una función de costo
@@ -128,9 +127,12 @@ entiendan que es cada parte.
 
     | Algoritmo | Tiempo de ejecución (%%timeit) | Memoria empleada (%%memit) |
     |-----------|---------------------|------------------|
-    |Busq. en anchura | 37.5 ms ± 86.6 μs por ciclo | pico de memoria: 83.78 MiB, incremento: 2.77 MiB |
-    |Busq. en prof.   | 38 ms ± 790 μs por ciclo | pico de memoria: 84.05 MiB, incremento: 0.00 MiB |
-    |Busq. en prof. optimizado| 2.28 ms ± 38 μs por ciclo | pico de memoria: 73.42 MiB, incremento: 0.11 MiB | 
+    |Búsq. en anchura | 37.5 ms ± 86.6 μs por ciclo | pico de memoria: 83.78 MiB, incremento: 2.77 MiB |
+    |Búsq. en prof.   | 38 ms ± 790 μs por ciclo | pico de memoria: 84.05 MiB, incremento: 0.00 MiB |
+    |Búsq. en prof. optimizado| 2.28 ms ± 38 μs por ciclo | pico de memoria: 73.42 MiB, incremento: 0.11 MiB | 
+    |Búsq. Greedy| 2.25 ms ± 16.2 μs por ciclo | pico de memoria: 71.28 MiB, incremento: 0.00 MiB |
+    |Búsq A* | 2.26 ms ± 19.7 μs por ciclo | pico de memoria: 71.39 MiB, incremento: 0.00 MiB| 
+
 
 
 7. Si la solución óptima es $2^k - 1$ movimientos con *k* igual al número de discos. Qué tan lejos está la solución 
@@ -138,9 +140,12 @@ del algoritmo implementado de esta solución óptima
      La tabla a continuación muestra la longitud de caminos encontrados por los algoritmos:
      | Algoritmo | Nodos explorados | Estados visitados | Nodos en frontera | Profundidad maxima | Costo toal|
      |-----------|------------------|-------------------|-------------------|--------------------|-----------|
-     |Busq. en anchura | 1351 | 233| 285 | 31 | 31.0 |
-     |Busq. en prof.   | 122 | 122 | 63 | 121 | 121.0
-     |Busq. en prof. optimizado| 82 | 82 | 41 | 81 | 81.0 |
+     |Busq. en anchura | 1351 | 233| 285 | 31 | 31 |
+     |Busq. en prof.   | 122 | 122 | 63 | 121 | 121 |
+     |Busq. en prof. optimizado| 82 | 82 | 41 | 81 | 81 |
+     |Búsq. Greedy| 377 | 231 | 51 | 31 | 31 |
+     |Búsq A* | 382 | 215 | 45 | 31 | 31 |
+
 
      Entonces, para el problema de las torres de Hanoi con 5 discos la distancia óptima es de 31 movimientos. La tabla indica que el algoritmo de búsqueda en anchura encuentra la solución optima, mientras que la búsqueda en profundidad tiene una distancia de 90 mientras que la verión optimizada, en donde se controla no mover dos veces seguidas las misma pieza, tiene una distancia de 50.
 
