@@ -110,6 +110,7 @@ entiendan que es cada parte.
 4. Para detalles de la implementación de búsqueda en profundidad (DFS), Greedy y A<sup>*</sup>, referirse a la [notebook TP1](./tp1.ipynb).
 
 5. ¿Qué complejidad en tiempo y memoria tiene el algoritmo elegido? 
+   
    Para analizar la complejidad en la implementación de búsqueda en profundidad se deben de considerar el comportamiento en función del número de discos *(n)*
      - Tiempo de ejecución: 
         - En el peor de los casos, el algoritmo de DFS debe de explorar el total de los $3^n$ estados posibles, dado que puede no encontrar la solución hasta el último estado. 
@@ -119,6 +120,12 @@ entiendan que es cada parte.
         - DFS puede llenar la pila de *frontier* hasta la profundidad máxima del $O(3^n)$ que corresponde al peor caso.
         - DFS almacena hasta $3^n$ estados, cada estado require un espacio del $O(n)$ por cada lista de varillas.
         - En consecuencia, la complejidad de memoria es: $O(n \cdot 3^n)$
+    
+    
+    Al realizar un análisis similar para el caso de la búsqueda Greedy, el comportamiento en el peor escenario resulta en un tiempo de $O(3^n)$. 
+    En un caso óptimo, en donde la función de heurística guía al algoritmo perfectamente hacia la solución, se realiza por un camino de $2^n -1$. De esto resulta que el tiempo de ejecución es del $O(n2\cdot^2)$
+
+    En la búsqueda estrella, al emplear una cola de prioridad para explorar los nodos, se asegura una solución optima con una complejidad de tiempo del $O(n2\cdot^2)$ mejorando significativamente a los resultados obtenidos por los metodos Greedy y Profundidad.
 
 
 
