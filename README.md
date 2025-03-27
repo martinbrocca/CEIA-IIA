@@ -156,6 +156,23 @@ del algoritmo implementado de esta solución óptima
 
      Entonces, para el problema de las torres de Hanoi con 5 discos la distancia óptima es de 31 movimientos. La tabla indica que el algoritmo de búsqueda en anchura encuentra la solución optima, mientras que la búsqueda en profundidad tiene una distancia de 90 mientras que la verión optimizada, en donde se controla no mover dos veces seguidas las misma pieza, tiene una distancia de 50.
 
+## Resumen del trabajo:
+- **BFS**
+  
+  En este trabajo práctico, se analizó el código provisto en la clase para resolver el problema de la Torre de Hanoi con un algoritmo de búsqueda primero en anchura (BFS), que consiste en utilizar una cola FIFO (First In - First Out) para definir el orden en que se exploran los nodos del árbol.
+- **DFS**
+  
+  Tomando como base el ejemplo base, se implementó el algoritmo de búsqueda primero en profundidad (DFS). Para esto, se convirtió la cola FIFO en una cola LIFO (Last In - First Out). Esto se realizó modificando la forma en que se agregan elementos a la lista en cada iteración. En el caso de la cola FIFO se utilizaba un *insert*, que introduce el nuevo elemento al principio de la lista, y luego se utiliza *pop* para extraer el último elemento. Para convertirlo en una cola LIFO, se reemplaza el insert por *append*, que inserta el nuevo elemento al final de la lista, y se mantiene el *pop* para extraer el último elemento. 
+- **DFS_Smart**
+  
+  Luego se realizó una modificación extra para optimizar el algoritmo DFS, al que se le llamó DFS_Smart. Se observó que en los casos en que había dos movimientos posibles para un disco, se plantean como dos estados posibles, pero luego en el siguiente nivel se vuelve a proponer ese mismo movimiento. Por esta razón, se agregó una función que evalúa si se está moviendo el mismo disco que se movió anteriormente, y se limita ese movimiento.
+- **Greedy**
+  
+  Por otro lado, se implementó un algoritmo de búsqueda informada de tipo Greedy. Para esto, se planteó una función heurística que cuenta cuántos discos están fuera de la posición objetivo. Esta función se utilizó para crear una cola prioritaria, ordenando los elementos según el valor de la función, utilizando heapq.heappush para insertarlos en la cola prioritaria y heapq.heappush para extraerlos en el orden propuesto.
+- **A\***
+  
+  Por último se implementó el algoritmo A*, que funciona de manera similar al algoritmo Greedy, pero la prioridad de la cola prioritaria está dada por el valor del costo más el valor de la función heurística. De todas formas, es importante tener en cuenta que en este problema todos los movimientos tienen el mismo costo.
+
 
 ## Conclusiones finales:
 
