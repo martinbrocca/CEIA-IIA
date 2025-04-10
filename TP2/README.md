@@ -78,8 +78,9 @@ También se observaron correlaciones destacadas entre:
 - `AveRooms` y `AveBedrms` (alta correlación positiva, >0.8). El número de habitaciones tiene una correlación con la cantidad de dormitorios.
 - `Latitude` y `MedHouseVal` mostraron correlación negativa. La latitud tiene una correlación negativa con el valor de la casa.
 
-**Visualización**:
-![Heatmap de correlación](figures/heatmap_correlacion.png)
+**Heatmap de correlación**:
+
+![Heatmap de correlación](results/heatmap_correlacion.png)
 
 ---
 
@@ -94,8 +95,9 @@ En resumen, el análisis visual mostró:
 - `MedInc`, `MedHouseVal`: distribución más concentrada, algo similar a una forma de campana.
 - `Latitude`, `Longitude`: bimodalidad geográfica.
 
-**Visualización**:
-![Histogramas](figures/histogramas.png)
+**Histogramas**:
+
+![Histogramas](results/histogramas.png)
 
 ### Observaciones de los histogramas por variable
 
@@ -131,8 +133,9 @@ El R² ≈ 0.61 indica que el modelo explica el 61% de la variabilidad. Aún que
 
 Al no ser posible graficar la recta de regresión vs los datos en un gráfico 2D al tener 8 variables, graficamos los datos reales vs la predicción. A medida que los puntos se alejan de la recta diagonal implica que el error es mayor (si están por encima de la recta, el modelo está sobreestimando el valor real y viceversa)
 
-**Visualización**:
-![Histogramas](figures/real_vs_predicho_linear.png)
+**Real vs. predicho Linear**:
+
+![Real vs. predicho Linear](results/real_vs_predicho_linear.png)
 
 Observamos que el modelo tiende a sobreestimar los valores bajos (por ej para valor real 1 hay mayor cantidad de puntos por encima de la recta que por debajo), y a subestimar los valores los valores más elevados (por ej  en 4). Por otro lado para el valor de 5, hay una enorme dispersión, indicando una gran cantidad de puntos que el modelo subestima y también que sobreestima, por lo que no logra captar correctamente el comportamiento en esta zona.
 
@@ -191,7 +194,8 @@ Esto puede deberse a alguna de estas causas:
 El siguiente gráfico muestra cómo varían los coeficientes a medida que aumenta α:
 
 **MSE vs α**:
-![MSE vs Alpha](figures/mse_vs_alpha.png)
+
+![MSE vs Alpha](results/mse_vs_alpha.png)
 
 - Coeficientes como el 4 y el 1 son los más influyentes inicialmente.
 - A medida que aumenta α, todos tienden hacia cero.
@@ -208,7 +212,8 @@ El gráfico muestra cómo varía el **error cuadrático medio (MSE)** promedio o
 - La línea punteada roja indica el **mejor α** encontrado: **α = 0.00**.
 
 **Real vs. predicho de Ridge**:
-![Real vs. predicho de Ridge](figures/real_vs_predicho_ridge.png)
+
+![Real vs. predicho de Ridge](results/real_vs_predicho_ridge.png)
 
 #### Interpretación
 
