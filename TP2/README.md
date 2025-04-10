@@ -48,23 +48,6 @@ Para resolver este trabajo práctico, son libres de utilizar los recursos que co
 
 ##
 
-### Dataset
-
-El conjunto de datos contiene las siguientes variables:
-
-| Variable     | Descripción |
-|--------------|-------------|
-| **MedInc**   | Ingreso medio en el bloque |
-| **HouseAge** | Edad mediana de las casas |
-| **AveRooms** | Promedio de habitaciones por hogar |
-| **AveBedrms**| Promedio de dormitorios por hogar |
-| **Population**| Población total del bloque |
-| **AveOccup** | Promedio de ocupación por hogar |
-| **Latitude** | Latitud del bloque |
-| **Longitude**| Longitud del bloque |
-| **MedHouseVal** | Valor medio de las casas (target), en unidades de $100.000 |
-
-
 ## Resolución de consignas
 
 ### 1. Correlación entre atributos y con el target
