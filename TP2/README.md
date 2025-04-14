@@ -73,10 +73,11 @@ Se graficaron histogramas para todas las variables predictoras y el target. Algu
 
 En resumen, el análisis visual mostró:
 
-- `HouseAge`: distribución asimétrica (acumulada a la izquierda).
+- `AveRooms`: distribución cercana a gaussiana, centrada alrededor de 5.
 - `Population`, `AveOccup`: colas largas a la derecha.
-- `MedInc`, `MedHouseVal`: distribución más concentrada, algo similar a una forma de campana.
-- `Latitude`, `Longitude`: bimodalidad geográfica.
+- `MedInc`: distribución asimétrica, sesgada a la derecha.
+- `Latitude`, `Longitude`: ambas variables geográficas muestran una marcada bimodalidad, representando las concentraciones urbanas típicas de California.
+- `MedHouseVal`: distribución sesgada a la derecha, con una concentración de viviendas de menor valor, pero una larga cola de propiedades más caras.
 
 **Histogramas**:
 
@@ -108,11 +109,11 @@ Se entrenó un modelo de regresión lineal utilizando todas las variables predic
 El R² ≈ 0.61 indica que el modelo explica el 61% de la variabilidad. Aún queda margen para mejorar (relaciones no lineales, interacciones, variables omitidas).
 
 **Ejemplo de resultado**:
-| Métrica | Valor |
-|--------|--------|
-| R²     | 0.61   |
-| MAE    | 0.51   |
-| MSE    | 0.52   |
+| Métrica | Valor  |
+|--------|---------|
+| R²     | 0.61    |
+| Var(y) | 19355.93|
+| Var(ŷ) | 11794.46|
 
 Al no ser posible graficar la recta de regresión vs los datos en un gráfico 2D al tener 8 variables, graficamos los datos reales vs la predicción. A medida que los puntos se alejan de la recta diagonal implica que el error es mayor (si están por encima de la recta, el modelo está sobreestimando el valor real y viceversa)
 
@@ -159,30 +160,31 @@ El modelo lineal supera ampliamente al baseline, logrando una reducción del err
 
 ### 5. Regresión de Ridge con validación cruzada
 
-Se implementó una regresión Ridge con validación cruzada utilizando 5 folds. Se exploraron valores de α (penalización) en un amplio rango. El resultado obtenido fue:
+Se implementó una regresión Ridge con validación cruzada utilizando 5 folds. Se exploraron valores de α (penalización) en un rango continuo entre 0 y 12.5. El resultado obtenido fue:
 
-- **Mejor α encontrado: 0.00**
+- **Mejor α encontrado: 6.63**
 - **MSE correspondiente: 0.5268**
 
-Un valor de α = 0.00 implica que **la regularización no fue necesaria** para mejorar el rendimiento del modelo. En otras palabras, el modelo se comporta igual que una **regresión lineal tradicional** sin penalización.
+Un valor de α = 6.63 implica que **sí fue útil aplicar cierta regularización** para mejorar el rendimiento del modelo. En otras palabras, el modelo NO se comporta igual que una **regresión lineal tradicional** sin penalización.
 
-Esto puede deberse a alguna de estas causas:
+Un α > 0 sugiere que:
 
-- Que el modelo base ya tenía un buen ajuste.
-- Que no existe multicolinealidad severa ni outliers extremos.
-- Que aplicar penalización reduce la varianza, pero **aumenta el sesgo innecesariamente**.
+- La penalización ayuda a reducir el sobreajuste.
+- Se mejora la estabilidad del modelo al controlar los coeficientes.
+- El modelo gana en generalización al suavizar la varianza **sin penalizar excesivamente el sesgo**.
 
 #### Análisis gráfico: evolución de los coeficientes
 
 El siguiente gráfico muestra cómo varían los coeficientes a medida que aumenta α:
 
-**MSE vs α**:
+**Evolución de los coeficientes de Ridge**:
 
-![MSE vs Alpha](results/mse_vs_alpha.png)
+![Coeficientes de Ridge](results/coeficientes_ridge.png)
 
-- Coeficientes como el 4 y el 1 son los más influyentes inicialmente.
+- Inicialmente, coeficientes como el 1 y el 4 tienen valores significativamente altos en magnitud, indicando mayor influencia.
 - A medida que aumenta α, todos tienden hacia cero.
-- Esto permite visualizar el efecto de la regularización incluso si no mejora el rendimiento predictivo en este caso.
+- Este comportamiento evidencia el efecto de la **regularización L2**, que busca simplificar el modelo penalizando los coeficientes grandes.
+- La curva suave y decreciente muestra cómo Ridge controla la complejidad del modelo, favoreciendo una mejor generalización.
 
 ---
 
@@ -192,17 +194,18 @@ El gráfico muestra cómo varía el **error cuadrático medio (MSE)** promedio o
 
 - El eje X representa los valores de α (penalización).
 - El eje Y representa el MSE (validación cruzada).
-- La línea punteada roja indica el **mejor α** encontrado: **α = 0.00**.
+- La línea punteada roja indica el **mejor α** encontrado: **α = 6.63**.
 
-**Real vs. predicho de Ridge**:
+**MSE vs. Alpha**:
 
-![Real vs. predicho de Ridge](results/real_vs_predicho_ridge.png)
+![MSE vs. Alpha](results/mse_vs_alpha.png)
 
 #### Interpretación
 
-- A medida que α aumenta, el MSE también aumenta.
-- Esto indica que la penalización **empeora el ajuste** del modelo para este conjunto de datos.
-- El mejor rendimiento se obtiene sin aplicar regularización, lo que significa que el modelo de regresión lineal simple es suficiente para este problema.
+- Se observa una **forma en U invertida**, donde el MSE disminuye inicialmente y luego vuelve a crecer.
+- El mínimo del MSE ocurre en α=6.63, lo que indica un punto óptimo de regularización.
+- Aplicar una penalización moderada permitió encontrar un **equilibrio entre sesgo y varianza**, mejorando la capacidad de generalización del modelo frente a una regresión lineal sin regularización.
+- A valores de α muy pequeños o muy grandes, el rendimiento disminuye, lo que demuestra la importancia de ajustar correctamente este hiperparámetro.
 
 ---
 
@@ -213,18 +216,24 @@ Se compararon ambos modelos sobre el conjunto de evaluación utilizando las mét
 | Modelo           | Mejor α | MAE   | MSE   | R²    |
 |------------------|---------|-------|-------|-------|
 | Lineal           | —       | 0.527 | 0.531 | 0.596 |
-| Ridge (α = 0.00) | 0.00    | 0.514 | 0.5268| 0.608 |
+| Ridge (α = 6.63) | 6.63    | 0.527 | 0.531 | 0.596 |
 
-#### Interpretación
+#### ¿Cuál de los dos modelos da mejores resultados?  (usando MSE y MAE)
 
-Ambos modelos ofrecen resultados muy similares. La **validación cruzada mostró que el mejor α para Ridge fue 0**, lo cual significa que la **regularización L2 no mejora el desempeño** frente a una regresión lineal clásica.
+Comparando las métricas de evaluación:
+
+- VER
+
+#### Conjeturar por qué el modelo que da mejores resultados mejora.
+
+- VER
+
+#### ¿Qué error se puede haber reducido?
+
+- VER
 
 #### Conclusión
 
-Esto sugiere que el dataset tiene:
+Los resultados sugieren que:
 
-- Suficiente tamaño para el aprendizaje sin overfitting.
-- Una relación señal-ruido adecuada.
-- Variables explicativas bien comportadas, sin multicolinealidad extrema.
-
-La regresión Ridge tiende a ser útil cuando hay sobreajuste o alta colinealidad entre variables, lo cual no parece ser el caso. Por lo tanto, **el modelo más simple (lineal) es suficiente para capturar la estructura subyacente de los datos**.
+- VER
