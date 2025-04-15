@@ -220,20 +220,29 @@ Se compararon ambos modelos sobre el conjunto de evaluación utilizando las mét
 
 #### ¿Cuál de los dos modelos da mejores resultados?  (usando MSE y MAE)
 
-Comparando las métricas de evaluación:
+Comparando las métricas de evaluación, ambos modelos presentan resultados prácticamente idénticos en términos de MAE y MSE. Esto indica que **la regresión lineal y Ridge tienen un rendimiento muy similar sobre el conjunto de prueba**, sin diferencias estadísticamente significativas en los errores promedio.
 
-- VER
 
-#### Conjeturar por qué el modelo que da mejores resultados mejora.
+#### Conjeturar por qué el modelo que da mejores resultados mejora
 
-- VER
+En este caso, ninguno de los dos modelos ofrece una mejora clara sobre el otro. Esto puede deberse a que:
+
+- El conjunto de datos presenta **baja multicolinealidad**, como se observa en el mapa de calor. Las variables predictoras no están altamente correlacionadas entre sí, lo que reduce la necesidad de penalización.
+- Se realizó una **limpieza y estandarización previa** de las variables predictoras, lo que **redujo la presencia de outliers y ruido**, haciendo innecesaria la penalización que ofrece Ridge.
+- El valor óptimo de α para Ridge fue **relativamente pequeño (6.63)**, lo que implica que la penalización aplicada fue leve y no modificó de forma sustancial los coeficientes del modelo. Las variables se escalaron con StandardScaler, por lo tanto todas las variables tienen media 0 y varianza 1. En ese contexto, valores de α entre 0.01 y 10 suelen considerarse “moderados”. Por eso α=6.63 no es extremadamente pequeño, pero tampoco es alto, está dentro del rango donde la regularización empieza a actuar pero no domina.
 
 #### ¿Qué error se puede haber reducido?
 
-- VER
+Dado que las métricas son idénticas, **no se observa una reducción significativa de ningún tipo de error**. Sin embargo, en otros contextos, Ridge suele ser útil para **reducir la varianza del modelo** (es decir, evitar que se sobreajuste al conjunto de entrenamiento). En este caso particular, esa ventaja **no se materializa** porque la regresión lineal ya generaliza correctamente.
 
 #### Conclusión
 
 Los resultados sugieren que:
 
-- VER
+- El modelo lineal captura adecuadamente la relación entre las variables predictoras y el target sin necesidad de regularización.
+- La similitud entre ambos modelos se explica por:
+  - **Baja multicolinealidad**, lo que evita la necesidad de penalización de coeficientes.
+  - **Reducción de ruido y valores atípicos**, gracias al preprocesamiento se logró estabilizar la escala y dispersión de las variables, reduciendo indirectamente el impacto del ruido y los valores atípicos. Esto permitió que la regresión lineal ya funcione correctamente, y que la regularización de Ridge no aporte una mejora significativa.
+  - Un valor de α que no es lo suficientemente alto como para generar un cambio significativo en los coeficientes de Ridge.
+
+Por lo tanto, **en este escenario**, el modelo de regresión lineal resulta preferible **por su simplicidad e interpretabilidad**, ya que ofrece el mismo rendimiento sin introducir complejidad adicional.
