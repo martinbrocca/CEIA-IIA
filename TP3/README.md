@@ -1,4 +1,4 @@
-# TP1: Algoritmos de búsqueda en Torre de Hanoi
+# TP3: Detector de SPAM
 
 ## Grupo de trabajo 1
 **Miembros:**
